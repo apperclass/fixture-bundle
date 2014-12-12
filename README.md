@@ -2,8 +2,7 @@
 
 Apperclass Fixture Bundle allow to import and export fixtures from db to some format (yml at the moment) and viceversa.
 
-```
-#!bash
+```shell
 php app/console apperclass:fixture:import
 php app/console apperclass:fixture:export
 ```
@@ -11,13 +10,14 @@ php app/console apperclass:fixture:export
 ## Process
 
 The command line use a Process that with many FixtureManagers transform data into entities and entities into data. If you want to add a FixtureManager to some process you can do it with a tag.
-```
-#!xml
+
+```xml
 <!-- for import -->
 <tag name="apperclass_fixture.import_fixture_manager" />
 <!-- for export -->
 <tag name="apperclass_fixture.export_fixture_manager" />
 ```
+
 ### The import process
 
 Every fixture manager during the import process follows these steps:
@@ -44,6 +44,7 @@ Every fixture manager during the export process follows these steps:
 3. Encode the FixturePack into some data
 4. Save the data (into filesystem)
 
+
 ```
 apperclass_fixture.entity_manager_load
 apperclass_fixture.packer_pack
@@ -58,12 +59,12 @@ Packers are the core part of the process. The transform entity into FixturePack 
 
 If you want to change how a single property is managed you have to add an analyzer to all Packers you need.
 
-```
-#!xml
+```xml
 <call method="addAnalyzer">
     <argument type="service" id="my_analyzer" />
 </call>
 ```
+
 
 Every Analyzer has 2 methods **fromEntity** which set a fixture property analyzing a ReflectionProperty and **fromFixture** which set an entity property analyzing a Fixture.
 
