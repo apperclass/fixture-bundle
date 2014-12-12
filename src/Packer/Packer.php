@@ -12,12 +12,17 @@ use Apperclass\Bundle\FixtureBundle\Key\Method;
 use Apperclass\Bundle\FixtureBundle\Key\Property;
 use Apperclass\Bundle\FixtureBundle\Util\Identificator;
 
+/**
+ * Class Packer
+ *
+ * @package Apperclass\Bundle\FixtureBundle\Packer
+ */
 class Packer implements PackerInterface
 {
     protected $analyzers;
 
     /**
-     * __construct
+     * @param PropertyAnalyzer $propertyAnalyzer
      */
     public function __construct(PropertyAnalyzer $propertyAnalyzer)
     {

@@ -47,40 +47,43 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
-        <!-- Fixture Manager -->
+        <!-- Fixture Manager (for import) -->
         <service id="apperclass_fixture.fixture_manager" class="Apperclass\Bundle\FixtureBundle\Fixture\Manager\FixtureManager">
             <argument type="service" id="apperclass_fixture.array_parser" />
             <argument type="service" id="apperclass_fixture.packer" />
             <argument type="service" id="apperclass_fixture.entity_manager" />
             <argument type="service" id="apperclass_fixture.yaml_data_manager" />
+            <argument type="service" id="event_dispatcher" />
+            <tag name="apperclass_fixture.import_fixture_manager" />
         </service>
 
-        <!-- Association Manager -->
+        <!-- Association Manager (for import) -->
         <service id="apperclass_fixture.association_manager" class="Apperclass\Bundle\FixtureBundle\Fixture\Manager\FixtureManager">
             <argument type="service" id="apperclass_fixture.array_parser" />
             <argument type="service" id="apperclass_fixture.association_packer" />
             <argument type="service" id="apperclass_fixture.entity_manager" />
             <argument type="service" id="apperclass_fixture.yaml_data_manager" />
+            <argument type="service" id="event_dispatcher" />
+            <tag name="apperclass_fixture.import_fixture_manager" />
         </service>
 
-        <!-- Full Fixture Manager -->
+        <!-- Full Fixture Manager (for export) -->
         <service id="apperclass_fixture.full_fixture_manager" class="Apperclass\Bundle\FixtureBundle\Fixture\Manager\FixtureManager">
             <argument type="service" id="apperclass_fixture.array_parser" />
             <argument type="service" id="apperclass_fixture.full_packer" />
             <argument type="service" id="apperclass_fixture.entity_manager" />
             <argument type="service" id="apperclass_fixture.yaml_data_manager" />
+            <argument type="service" id="event_dispatcher" />
+            <tag name="apperclass_fixture.export_fixture_manager" />
         </service>
 
         <!-- ImportProcess  -->
         <service id="apperclass_fixture.import_process" class="Apperclass\Bundle\FixtureBundle\Process\ImportFixtureProcess">
-            <argument type="service" id="apperclass_fixture.fixture_manager" />
-            <argument type="service" id="apperclass_fixture.association_manager" />
             <argument type="service" id="apperclass_fixture.purger" />
         </service>
 
         <!-- ExportProcess  -->
         <service id="apperclass_fixture.export_process" class="Apperclass\Bundle\FixtureBundle\Process\ExportFixtureProcess">
-            <argument type="service" id="apperclass_fixture.full_fixture_manager" />
         </service>
 
         <!-- Purger -->

@@ -2,13 +2,26 @@
 
 namespace Apperclass\Bundle\FixtureBundle\Packer;
 
-use Apperclass\Bundle\FixtureBundle\Entity\EntityCollection;
 use Apperclass\Bundle\FixtureBundle\Fixture\FixtureInterface;
-use Apperclass\Bundle\FixtureBundle\Fixture\Pack\FixturePackInterface;
 
+/**
+ * Interface PropertyAnalyzerInterface
+ *
+ * @package Apperclass\Bundle\FixtureBundle\Packer
+ */
 interface PropertyAnalyzerInterface
 {
+    /**
+     * @param \ReflectionProperty $reflectionProperty
+     * @param FixtureInterface    $fixture
+     * @param mixed               $entity
+     */
     public function fromEntity(\ReflectionProperty $reflectionProperty, FixtureInterface $fixture, $entity);
 
+    /**
+     * @param \ReflectionProperty $reflectionProperty
+     * @param FixtureInterface    $fixture
+     * @param mixed               $entity
+     */
     public function fromFixture(\ReflectionProperty $reflectionProperty, FixtureInterface $fixture, $entity);
 }

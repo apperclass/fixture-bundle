@@ -11,6 +11,11 @@ use Apperclass\Bundle\FixtureBundle\Fixture\Pack\FixturePackInterface;
 use Apperclass\Bundle\FixtureBundle\Key\Method;
 use Apperclass\Bundle\FixtureBundle\Key\Property;
 
+/**
+ * Class FullPacker
+ *
+ * @package Apperclass\Bundle\FixtureBundle\Packer
+ */
 class FullPacker extends Packer
 {
 
