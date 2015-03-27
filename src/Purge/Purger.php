@@ -2,6 +2,7 @@
 
 namespace Apperclass\Bundle\FixtureBundle\Purge;
 
+use Apperclass\Bundle\FixtureBundle\Exception\PurgeException;
 use Doctrine\ORM\EntityManager;
 
 class Purger
@@ -22,17 +23,32 @@ class Purger
         $connection = $this->entityManager->getConnection();
         $schemaManager = $connection->getSchemaManager();
         $tables = $schemaManager->listTables();
-        $query = 'SET FOREIGN_KEY_CHECKS=0;';
+        $dbPlatform = $connection->getDatabasePlatform();
 
-        foreach($tables as $table) {
-            $name = $table->getName();
-            if ($name[0] !== '_') {
-                $query .= 'TRUNCATE ' . $name . ';';
-                $query .= 'ALTER TABLE ' . $name . ' AUTO_INCREMENT = 1;';
+        $connection->beginTransaction();
+
+        try{
+
+            foreach($tables as $table) {
+
+                if($dbPlatform->getName() !== 'sqlite') {
+                    $connection->query('SET FOREIGN_KEY_CHECKS=0');
+                }
+
+                $q = $dbPlatform->getTruncateTableSql($table->getName());
+                $connection->executeUpdate($q);
+
+                if($dbPlatform->getName() !== 'sqlite') {
+                    $connection->query('SET FOREIGN_KEY_CHECKS=1');
+                }
             }
-        }
-        $query .= 'SET FOREIGN_KEY_CHECKS=1;';
 
-        $connection->executeQuery($query, array(), array());
+            $connection->commit();
+
+        }catch (\Exception $e) {
+
+            $connection->rollback();
+            throw new PurgeException('Something went wrong while purge. Rollback.', 0 , $e);
+        }
     }
 }
